@@ -1,7 +1,9 @@
 import Datatype.Employee;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.filechooser.FileSystemView;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,6 +12,7 @@ public class GUI extends JFrame implements ActionListener{
     protected JFrame frame;
     protected JPanel panel;
     protected static JLabel fileSelected = new JLabel("no file selected");
+    public static JTextArea output = new JTextArea(10,80);
     public static final void initialize(){
         System.out.println("Loading...");
         // frame to contains GUI elements
@@ -39,20 +42,71 @@ public class GUI extends JFrame implements ActionListener{
 
         // make a panel to add the buttons and labels
         JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
 
         // add buttons to the frame
-        panel.add(button1);
-        panel.add(button2);
+
 
         // set the label to its initial value
-        //JLabel fileSelected = new JLabel("no file selected");
+
+
+        JLabel FooterAbout = new JLabel("\n ");
+
+
+
+        JLabel Header= new JLabel("Footer");
+        Header.setFont(new Font("Arial", Font.PLAIN, 30));
+        Border Headerborder = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
+
+        Header.setBorder(Headerborder);
+        Header.setPreferredSize(new Dimension(1024, 60));
+
+        Header.setText("Averaging Agreement PDF Generator");
+        Header.setHorizontalAlignment(JLabel.CENTER);
+        Header.setVerticalAlignment(JLabel.CENTER);
+
+
+
+        JLabel Footer= new JLabel("Footer");
+        Border Footerborder = BorderFactory.createLineBorder(Color.BLACK);
+
+        Footer.setBorder(Footerborder);
+        Footer.setPreferredSize(new Dimension(1024, 40));
+
+        Footer.setText("Developed By Derek Warne :: https://github.com/Zeedin/ACTEH-PDFGenerator");
+        Footer.setHorizontalAlignment(JLabel.CENTER);
+        Footer.setVerticalAlignment(JLabel.CENTER);
+
+
+        JPanel eastPanel = new JPanel();
+        eastPanel.setLayout(new BorderLayout());
+        eastPanel.add(button1, BorderLayout.SOUTH);
+        eastPanel.add(button2, BorderLayout.NORTH);
+        //eastPanel.add(fileSelected, BorderLayout.CENTER);
 
         // add panel to the frame
-        panel.add(fileSelected);
-        frame.add(panel);
 
+        panel.add(Header, BorderLayout.NORTH);
+
+
+
+
+           // panel.add(output, BorderLayout.CENTER);
+            JScrollPane scroll = new JScrollPane (output, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+            panel.add(scroll , BorderLayout.CENTER);
+            panel.add(eastPanel, BorderLayout.EAST);
+
+
+        panel.add(Footer, BorderLayout.SOUTH);
+
+
+
+        frame.add(panel);
         frame.show();
     }
+
+
+
 
     //Event Hander
     public void actionPerformed(ActionEvent evt)

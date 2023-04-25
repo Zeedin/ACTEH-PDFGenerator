@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.text.Format.*;
 
 public class Schedule {
 
@@ -88,5 +87,50 @@ public class Schedule {
 
 
         return weekOfYear;
+    }
+
+    @Override
+    public String toString() {
+
+        String printOut = "\n";
+
+
+        for(int i=0 ; i<month.length ; i++){
+            printOut = printOut + "\n";
+            for(int j=0 ; j<month[i].length ; j++){
+
+                if (month[i][j][0] != 0) {
+                    printOut = printOut + " Total Hours : " + month[i][j][0];
+                    printOut = printOut + " Start Time : " + month[i][j][1];
+                    printOut = printOut + " End Time : " + month[i][j][2] + "\n";
+                }
+            }
+        }
+
+/**
+        for(int i = 0; i < 3; i++) {
+            printOut = printOut + " \n Week ["+ i + "] ";
+
+
+
+            for(int k = 0; k < 6; i++) {
+
+
+                    printOut = printOut + " Day [" + k + "] ";
+                    printOut = printOut + " Start : " + month[i][k][0];
+                    printOut = printOut + " End : " + month[i][k][1];
+                    printOut = printOut + " Total Hours : " + month[i][k][2];
+
+
+            }
+
+        }
+
+ **/
+
+
+
+
+        return printOut;
     }
 }

@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 public class Parser {
 
+    public static HashMap<Integer, Employee> employees = new HashMap<Integer, Employee>();
     public static void loadFile(String File) throws IOException {
 
         InputStream document = new FileInputStream(new File(File));
@@ -33,7 +34,7 @@ public class Parser {
 
         String scheduledEmployees[] = rawfile.split("\\r?\\n");
         //Datatype.Employee employees[] = null;
-        HashMap<Integer, Employee> employees = new HashMap<Integer, Employee>();
+
 
         for (int i=0; i < scheduledEmployees.length; i++){
             //System.out.println("Array :: " +  scheduledEmployees[i]);
@@ -80,8 +81,13 @@ public class Parser {
                 System.out.println("[ERROR]" + e);
             }
         }
+        GUI.output.setText(null);
 
-        System.out.println("GG!!!!");
+        for (Object value : employees.values()) {
+            GUI.output.append(value.toString());
+        }
+
+
     }
 
 

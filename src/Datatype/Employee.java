@@ -78,16 +78,19 @@ public class Employee {
     }
 
 
-/**
+
     @Override
     public String toString() {
-        return firstName+lastName;
+
+        String printOut = "\n" + firstName + " " + lastName + "\n Schedule " + schedule.toString();
+
+        return printOut;
     }
 public boolean equals(int employeeID) {
 
         return employeeID == this.employeeID;
         }
-
+/**
 public String compareTo(Datatype.Employee e) {
 
         int value;
