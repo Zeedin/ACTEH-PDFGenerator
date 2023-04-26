@@ -1,21 +1,35 @@
 /* requires itextpdf-5.1.2.jar or similar */
+package Editor;
 
+import Datatype.Employee;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.*;
+import main.GUI;
+import org.jdatepicker.impl.JDatePickerImpl;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 
 public class PDF {
 
-    public static void create() throws IOException, DocumentException {
+    private JDatePickerImpl datePicker;
+
+    public static void printAll(HashMap<Integer, Employee> employees, String exportLocation) throws DocumentException, IOException {
+
+        for (Employee employee : employees.values()) {
+            create(employee, exportLocation);
+        }
+
+    }
+    public static void create(Employee employee, String exportLocation) throws IOException, DocumentException {
 
         /* example inspired from "iText in action" (2006), chapter 2 */
 
-        PdfReader reader = new PdfReader("F:/Other/Desktop/testpdf.pdf"); // input PDF
+        PdfReader reader = new PdfReader(exportLocation+"/template.pdf"); // input PDF
         PdfStamper stamper = new PdfStamper(reader,
-                new FileOutputStream("F:/Other/Desktop/AVG-DerekWarne.pdf")); // output PDF
+                new FileOutputStream(exportLocation+"/AVG-"+ employee.firstNameGET() + "-" + employee.lastNameGET()+"("+GUI.dateStartPicker.getJFormattedTextField().getText()+").pdf")); // output PDF
         BaseFont bf = BaseFont.createFont( BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED); // set font
 
         //loop on pages (1-based)
@@ -26,22 +40,25 @@ public class PDF {
             PdfContentByte over = stamper.getOverContent(i);
 
             // write Name Title
-            rubberStamp(over,"Derek Warne agree", 320, 666 );
+            rubberStamp(over,employee.firstNameGET() + " " + employee.lastNameGET() + " agree", 320, 666 );
 
             // Number of Weeks for time
-            rubberStamp(over,"20/04/2023", 408, 596 );
+            rubberStamp(over, GUI.dateStartPicker.getJFormattedTextField().getText(), 408, 596 );
 
             // Start date of the agreement
-            rubberStamp(over,"20/04/2023", 360, 583 );
+            rubberStamp(over,GUI.dateStartPicker.getJFormattedTextField().getText(), 360, 583 );
 
             // End date of the agreement
-            rubberStamp(over,"1/05/2023", 360, 571 );
+            rubberStamp(over,GUI.dateEndPicker.getJFormattedTextField().getText(), 360, 571 );
 
 
 
+            // The Not Fun table :(
+            rubberStamp(over,"9A-9P 12h", 138, 396 );
+            //+53
+            rubberStamp(over,"9A-5P 8h", 192, 396 );
 
-
-
+            rubberStamp(over,"9A-12A 4h", 243, 396 );
 
 
 
