@@ -11,13 +11,24 @@ class PDFGenerator extends GUI {
     static String dataFile;
 
     // a default constructor
-    PDFGenerator()
-    {
+    PDFGenerator() {
+
     }
 
-    public static void main(String args[])
-    {
+    public static void main(String args[]) throws Exception {
         GUI.initialize();
+        PDF.create();
+         ;
+/**
+        ReplaceStream.main();
+        ReplaceStream.manipulatePdf("F:/Other/Desktop/");
+
+        PDDocument document = null;
+        document = PDDocument.load(new File("F:/Other/Desktop/testpdf.pdf"));
+        document = PDFEditor.replaceText(document, "name", "Derek");
+        document.save("F:/Other/Desktop/testpdf-edit.pdf");
+        document.close();
+**/
 
     }
 

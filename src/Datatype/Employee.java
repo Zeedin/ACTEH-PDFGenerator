@@ -82,7 +82,7 @@ public class Employee {
     @Override
     public String toString() {
 
-        String printOut = "\n" + firstName + " " + lastName + "\n Schedule " + schedule.toString();
+        String printOut = "\n" + firstName + " " + lastName + "\n \t \t \t \t Schedule " + schedule.toString();
 
         return printOut;
     }

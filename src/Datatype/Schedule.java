@@ -96,38 +96,20 @@ public class Schedule {
 
 
         for(int i=0 ; i<month.length ; i++){
-            printOut = printOut + "\n";
+            printOut = printOut + "    WEEK " + (i +1) + "\n";
             for(int j=0 ; j<month[i].length ; j++){
 
                 if (month[i][j][0] != 0) {
-                    printOut = printOut + " Total Hours : " + month[i][j][0];
-                    printOut = printOut + " Start Time : " + month[i][j][1];
-                    printOut = printOut + " End Time : " + month[i][j][2] + "\n";
+                    java.util.Date Start = new java.util.Date(month[i][j][1]);
+                    java.util.Date End = new java.util.Date( month[i][j][2]);
+                    double hours = month[i][j][0]/10;
+
+                    printOut = printOut + " \t Total Hours : " + hours;
+                    printOut = printOut + "    |    Start Time : " + Start;
+                    printOut = printOut + "    |    End Time : " + End + "\n";
                 }
             }
         }
-
-/**
-        for(int i = 0; i < 3; i++) {
-            printOut = printOut + " \n Week ["+ i + "] ";
-
-
-
-            for(int k = 0; k < 6; i++) {
-
-
-                    printOut = printOut + " Day [" + k + "] ";
-                    printOut = printOut + " Start : " + month[i][k][0];
-                    printOut = printOut + " End : " + month[i][k][1];
-                    printOut = printOut + " Total Hours : " + month[i][k][2];
-
-
-            }
-
-        }
-
- **/
-
 
 
 

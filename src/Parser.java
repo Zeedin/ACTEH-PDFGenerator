@@ -22,8 +22,7 @@ public class Parser {
         //System.out.print(dataFile);
 
         csvParser(PDFGenerator.dataFile);
-        //document.close();
-        System.out.println("bPerms Loaded!");
+        document.close();
     }
 
     public static void csvParser(String rawfile){
