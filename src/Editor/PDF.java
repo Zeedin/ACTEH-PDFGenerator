@@ -3,6 +3,7 @@ package Editor;
 
 import Datatype.Employee;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.pdf.*;
 import main.GUI;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -106,13 +107,42 @@ public class PDF {
         over.endText();
     }
 
-    public static void scheduleTable(Employee employee, PdfContentByte over) throws DocumentException, IOException {
+    public static void  rubberStampBold(PdfContentByte over, String textToStamp, int xPOS, int yPOS) throws DocumentException, IOException {
 
+        BaseFont bf = BaseFont.createFont( BaseFont.HELVETICA_BOLD, BaseFont.CP1252, BaseFont.NOT_EMBEDDED, false); // set font
+        over.beginText();
+        over.setFontAndSize(bf, 8);    // set font and size
+        over.setTextMatrix(xPOS, yPOS);   // set x,y position (0,0 is at the bottom left)
+        over.showText(textToStamp);  // set text
+        over.endText();
+    }
+
+    public static void  rubberStampPlus(PdfContentByte over, String textToStamp,int size, int xPOS, int yPOS) throws DocumentException, IOException {
+
+        BaseFont bf = BaseFont.createFont( BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED, false); // set font
+        over.beginText();
+        //over.lineTo();
+        over.setFontAndSize(bf, size);    // set font and size
+        over.setTextMatrix(xPOS, yPOS);   // set x,y position (0,0 is at the bottom left)
+        over.showText(textToStamp);  // set text
+        over.endText();
+    }
+
+    public static void scheduleTable(Employee employee, PdfContentByte over) throws DocumentException, IOException {
+        //Header
+        rubberStampBold(over,"Saturday", 93 + ((1) * 55), 410 );
+        rubberStampBold(over,"Sunday", 93 + ((2) * 55), 410 );
+        rubberStampBold(over,"Monday", 93 + ((3) * 55), 410 );
+        rubberStampBold(over,"Tuesday", 93 + ((4) * 55), 410 );
+        rubberStampBold(over,"Wednesday", 93 + ((5) * 55), 410 );
+        rubberStampBold(over,"Thursday", 93 + ((6) * 55), 410 );
+        rubberStampBold(over,"Friday", 93 + ((7) * 55), 410 );
 
         //Date BS
         SimpleDateFormat hourFormat  = new SimpleDateFormat("hh:mm a");
 
-
+        int xloc = 0;
+        int yloc = 0;
         for(int i=0 ; i<employee.scheduleGET().getDaysWorked().length ; i++){
             for(int j=0 ; j<employee.scheduleGET().getDaysWorked()[i].length ; j++){
 
@@ -125,21 +155,22 @@ public class PDF {
 
 
                     String startOfSched = hourFormat.format(Start);
-                    //String endOfSched = hourFormat.format(End);
-
-                    int xloc = 85 + ((j+1) * 50);
-                    int yloc = 385 + ((i+1) * 10);
+                    String endOfSched = hourFormat.format(End);
+                    System.out.println("Math : 5 + ("+j+")* 67");
+                     xloc = 88 + ((j+1) * 55);
+                     yloc = 395 - ((i) * 24 -2);
 
                     System.out.println("XGrid: "+ xloc);
 
                     System.out.println("YGrid: " + yloc);
 
-                    rubberStamp(over,startOfSched, xloc, yloc );
-                    //rubberStamp(over,endOfSched, xloc, yloc-20 );
+                    rubberStampPlus(over,startOfSched,8, xloc, yloc );
+                    rubberStampPlus(over,endOfSched,8, xloc, yloc-10 );
 
 
                 }
             }
+
         }
 
     }
