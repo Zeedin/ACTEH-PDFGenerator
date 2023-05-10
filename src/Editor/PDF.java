@@ -78,8 +78,6 @@ public class PDF {
             scheduleTable(employee, over);
 
 
-
-
             //Sig Feilds
             rubberStamp(over,employee.firstNameGET() + " " + employee.lastNameGET(), 95, 130);
 
@@ -87,10 +85,10 @@ public class PDF {
 
 
             // draw a red circle
-            over.setRGBColorStroke(0xFF, 0x00, 0x00);
-            over.setLineWidth(5f);
-            over.ellipse(250, 450, 350, 550);
-            over.stroke();
+            //over.setRGBColorStroke(0xFF, 0x00, 0x00);
+            //over.setLineWidth(5f);
+            //over.ellipse(250, 450, 350, 550);
+            //over.stroke();
         }
 
         stamper.close();
