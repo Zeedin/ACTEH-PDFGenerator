@@ -1,9 +1,12 @@
 package Datatype;
 
+import main.GUI;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 
 public class Schedule {
 
@@ -20,7 +23,7 @@ public class Schedule {
     protected int employeeID;
 
     protected long[][][] month = new long[4][7][3];
-    protected boolean AvgNeeded;
+    public boolean GenerateAgrement = false;
 
 
     /**
@@ -35,6 +38,10 @@ public class Schedule {
         //Format 4/16/2023 9:00 - MM/dd/yyyy h:mm
         SimpleDateFormat format  = new SimpleDateFormat("yyyy-MM-dd h:mm");
 
+        SimpleDateFormat inputDate  = new SimpleDateFormat("yyyy-MM-dd");
+        Date globledateStart = inputDate.parse(GUI.dateStartPicker.getJFormattedTextField().getText());
+        long globledateStartTimeUNIX = globledateStart.getTime();
+
         Date dateStartTime = format.parse(startTime);
         Date dateEndTime = format.parse(endTime);
 
@@ -43,12 +50,15 @@ public class Schedule {
         long dateEndTimeUNIX = dateEndTime.getTime();
         /// 3600 to convert seconds to hours then /100 to remove the extra long value and keep once dec place for half hours so can keep as long and not double
         long hoursWorked = ((dateEndTimeUNIX - dateStartTimeUNIX) / 3600)/100;
+        if (hoursWorked > 80){
 
+            GenerateAgrement = true;
+        }
 
         //index values
         int day = dayOfTheWeek(dateStartTime);
 
-        int baseWeek = weekOfTheMonth(dateStartTime);
+        int baseWeek = weekOfTheMonth(globledateStart);
         int currentWeek = weekOfTheMonth(dateStartTime);
 
         int relWeek = currentWeek - baseWeek;
@@ -87,6 +97,10 @@ public class Schedule {
 
 
         return weekOfYear;
+    }
+
+    public long[][][] getDaysWorked(){
+        return month;
     }
 
     @Override

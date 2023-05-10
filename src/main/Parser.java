@@ -66,6 +66,7 @@ public class Parser {
                         Person.startTimeSET(employeeRAW[7]);
                         Person.endTimeSET(employeeRAW[8]);
                         Person.totalSET(employeeRAW[9]);
+                        Person.superVisSET(employeeRAW[13]);
 
                         empSchedule.addShift(employeeRAW[7], employeeRAW[8], 10);
 

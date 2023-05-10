@@ -9,6 +9,9 @@ import org.jdatepicker.impl.JDatePickerImpl;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 
@@ -16,14 +19,17 @@ public class PDF {
 
     private JDatePickerImpl datePicker;
 
-    public static void printAll(HashMap<Integer, Employee> employees, String exportLocation) throws DocumentException, IOException {
+    public static void printAll(HashMap<Integer, Employee> employees, String exportLocation) throws DocumentException, IOException, ParseException {
 
         for (Employee employee : employees.values()) {
-            create(employee, exportLocation);
+
+            if (employee.GenerateAgrement()) {
+                create(employee, exportLocation);
+            }
         }
 
     }
-    public static void create(Employee employee, String exportLocation) throws IOException, DocumentException {
+    public static void create(Employee employee, String exportLocation) throws IOException, DocumentException, ParseException {
 
         /* example inspired from "iText in action" (2006), chapter 2 */
 
@@ -42,27 +48,41 @@ public class PDF {
             // write Name Title
             rubberStamp(over,employee.firstNameGET() + " " + employee.lastNameGET() + " agree", 320, 666 );
 
+            //Date BS
+                SimpleDateFormat dateText  = new SimpleDateFormat("MMMM, dd, yyyy");
+                SimpleDateFormat inputDate  = new SimpleDateFormat("yyyy-MM-dd");
+
+
+                Date dateStartTime = inputDate.parse(GUI.dateStartPicker.getJFormattedTextField().getText());
+                Date dateEndTime = inputDate.parse(GUI.dateEndPicker.getJFormattedTextField().getText());
+
+                String startOfSched = dateText.format(dateStartTime);
+                String endOfSched = dateText.format(dateEndTime);
+
+
+
             // Number of Weeks for time
-            rubberStamp(over, GUI.dateStartPicker.getJFormattedTextField().getText(), 408, 596 );
+
+            rubberStamp(over, startOfSched, 410, 596 );
 
             // Start date of the agreement
-            rubberStamp(over,GUI.dateStartPicker.getJFormattedTextField().getText(), 360, 583 );
+            rubberStamp(over, startOfSched, 270, 583 );
 
             // End date of the agreement
-            rubberStamp(over,GUI.dateEndPicker.getJFormattedTextField().getText(), 360, 571 );
+            rubberStamp(over, endOfSched, 270, 571 );
 
 
 
             // The Not Fun table :(
-            rubberStamp(over,"9A-9P 12h", 138, 396 );
-            //+53
-            rubberStamp(over,"9A-5P 8h", 192, 396 );
-
-            rubberStamp(over,"9A-12A 4h", 243, 396 );
+            scheduleTable(employee, over);
 
 
 
 
+            //Sig Feilds
+            rubberStamp(over,employee.firstNameGET() + " " + employee.lastNameGET(), 95, 130);
+
+            rubberStamp(over,employee.superVisGET(), 345, 130);
 
 
             // draw a red circle
@@ -86,6 +106,43 @@ public class PDF {
         over.endText();
     }
 
+    public static void scheduleTable(Employee employee, PdfContentByte over) throws DocumentException, IOException {
+
+
+        //Date BS
+        SimpleDateFormat hourFormat  = new SimpleDateFormat("hh:mm a");
+
+
+        for(int i=0 ; i<employee.scheduleGET().getDaysWorked().length ; i++){
+            for(int j=0 ; j<employee.scheduleGET().getDaysWorked()[i].length ; j++){
+
+
+                //Its a bit messy calling wize
+                if (employee.scheduleGET().getDaysWorked()[i][j][0] != 0) {
+                    java.util.Date Start = new java.util.Date(employee.scheduleGET().getDaysWorked()[i][j][1]);
+                    java.util.Date End = new java.util.Date(employee.scheduleGET().getDaysWorked()[i][j][2]);
+                    double hours = employee.scheduleGET().getDaysWorked()[i][j][0]/10;
+
+
+                    String startOfSched = hourFormat.format(Start);
+                    //String endOfSched = hourFormat.format(End);
+
+                    int xloc = 85 + ((j+1) * 50);
+                    int yloc = 385 + ((i+1) * 10);
+
+                    System.out.println("XGrid: "+ xloc);
+
+                    System.out.println("YGrid: " + yloc);
+
+                    rubberStamp(over,startOfSched, xloc, yloc );
+                    //rubberStamp(over,endOfSched, xloc, yloc-20 );
+
+
+                }
+            }
+        }
+
+    }
 
     public void manipulatePdf(String src, String dest) throws IOException, DocumentException {
         PdfReader reader = new PdfReader(src);

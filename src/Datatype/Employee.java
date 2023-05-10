@@ -13,9 +13,12 @@ public class Employee {
     protected int employeeID;
     protected String firstName;
     protected String lastName;
+    protected String superVis;
     protected String startTime;
     protected String endTime;
     protected String total;
+
+
 
     protected Schedule schedule;
 
@@ -45,6 +48,13 @@ public class Employee {
         this.total = total;
     }
 
+    public final void superVisSET(String superVis) {
+
+        superVis = superVis.replaceFirst("[(].*?[)]", "");
+
+        this.superVis = superVis;
+    }
+
     public final void scheduleSET(Schedule schedule) {
         this.schedule = schedule;
     }
@@ -63,6 +73,9 @@ public class Employee {
     public String lastNameGET() {
         return lastName;
     }
+    public String superVisGET() {
+        return superVis;
+    }
     public String startTimeGET() {
         return startTime;
     }
@@ -73,9 +86,14 @@ public class Employee {
         return total;
     }
 
+    public Boolean GenerateAgrement() {
+        return schedule.GenerateAgrement;
+    }
+
     public Schedule scheduleGET() {
         return schedule;
     }
+
 
 
 

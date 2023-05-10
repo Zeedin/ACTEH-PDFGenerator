@@ -196,7 +196,7 @@ public class GUI extends JFrame implements ActionListener{
 
                 } catch (DocumentException e) {
                     throw new RuntimeException(e);
-                } catch (IOException e) {
+                } catch (IOException | ParseException e) {
                     throw new RuntimeException(e);
                 }
 
