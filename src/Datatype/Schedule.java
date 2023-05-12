@@ -58,20 +58,51 @@ public class Schedule {
         //index values
         int day = dayOfTheWeek(dateStartTime);
 
-        int baseWeek = weekOfTheMonth(globledateStart);
-        int currentWeek = weekOfTheMonth(dateStartTime);
+        //int baseWeek = weekOfTheMonth(globledateStart);
 
-        int relWeek = currentWeek - baseWeek;
+        //int currentWeek = weekOfTheMonth(dateStartTime);
 
-        month[relWeek][day][0] = hoursWorked;
-        month[relWeek][day][1] = dateStartTimeUNIX;
-        month[relWeek][day][2] = dateEndTimeUNIX;
+
+        //int baseWeek = getWeekOfSchedule(globledateStart);
+        //int currentWeek = getWeekOfSchedule(dateStartTime);
+
+        //System.out.println(baseWeek);
+        //System.out.println(currentWeek);
+        int relWeek = getWeekOfSchedule(dateStartTime,  globledateStart);
+        //int relWeek = currentWeek - baseWeek;
+
+        //System.out.println("Week ID: "+relWeek );
+
+        if (relWeek != 69) {
+            month[relWeek][day][0] = hoursWorked;
+            month[relWeek][day][1] = dateStartTimeUNIX;
+            month[relWeek][day][2] = dateEndTimeUNIX;
+        }
     }
 
-    private static int getWeekOfMonth() {
-        Calendar cal = Calendar.getInstance();
-        cal.setFirstDayOfWeek(Calendar.SATURDAY);
-        return cal.get(Calendar.WEEK_OF_MONTH);
+    private static int getWeekOfSchedule(Date date, Date globledateStart) {
+        Calendar schedDay = Calendar.getInstance();
+        schedDay.setTime(date);
+        schedDay.setFirstDayOfWeek(Calendar.SATURDAY);
+        int day = schedDay.get(Calendar.DAY_OF_YEAR);
+
+
+        Calendar StartDay = Calendar.getInstance();
+        StartDay.setTime(globledateStart);
+        StartDay.setFirstDayOfWeek(Calendar.SATURDAY);
+        int startDay =  StartDay.get(Calendar.DAY_OF_YEAR);
+
+        int weekNumber = day - startDay;
+        int weekid = 69;
+
+        if (weekNumber <= 6){weekid = 0;}
+        else if (weekNumber <= 13 ){weekid = 1;}
+        else if (weekNumber <= 20 ){weekid = 2;}
+        else if (weekNumber <= 27 ){weekid = 3;}
+        else {weekid = 69;} // junk value to throw out
+
+        //System.out.println("YearStartNumb: "+startDay +" CompareDay: "+day+" Week ID: "+weekid + " Math: " + weekNumber);
+        return weekid;
     }
 
 
