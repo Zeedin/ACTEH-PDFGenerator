@@ -36,7 +36,7 @@ public class PDF {
 
         PdfReader reader = new PdfReader(exportLocation+"/template.pdf"); // input PDF
         PdfStamper stamper = new PdfStamper(reader,
-                new FileOutputStream(exportLocation+"/AVG-"+ employee.firstNameGET() + "-" + employee.lastNameGET()+"("+GUI.dateStartPicker.getJFormattedTextField().getText()+").pdf")); // output PDF
+                new FileOutputStream(exportLocation+"/Averaging_Agreement-"+ employee.firstNameGET() + "-" + employee.lastNameGET()+"("+GUI.dateStartPicker.getJFormattedTextField().getText()+"-to-"+GUI.dateEndPicker.getJFormattedTextField().getText()+").pdf")); // output PDF
         BaseFont bf = BaseFont.createFont( BaseFont.HELVETICA, BaseFont.CP1252, BaseFont.NOT_EMBEDDED); // set font
 
         //loop on pages (1-based)
@@ -154,13 +154,13 @@ public class PDF {
 
                     String startOfSched = hourFormat.format(Start);
                     String endOfSched = hourFormat.format(End);
-                    System.out.println("Math : 5 + ("+j+")* 67");
+                    ////System.out.println("Math : 5 + ("+j+")* 67");
                      xloc = 88 + ((j+1) * 55);
                      yloc = 395 - ((i) * 24 -2);
 
-                    System.out.println("XGrid: "+ xloc);
+                    ////System.out.println("XGrid: "+ xloc);
 
-                    System.out.println("YGrid: " + yloc);
+                    ////System.out.println("YGrid: " + yloc);
 
                     rubberStampPlus(over,startOfSched,8, xloc, yloc );
                     rubberStampPlus(over,endOfSched,8, xloc, yloc-10 );

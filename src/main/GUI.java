@@ -31,7 +31,7 @@ public class GUI extends JFrame implements ActionListener{
     protected static JLabel fileSelected = new JLabel("no file selected");
     public static JTextArea output = new JTextArea(10,60);
     public static final void initialize(){
-        System.out.println("Loading...");
+        //System.out.println("Loading...");
         // frame to contains GUI elements
         JFrame frame = new JFrame("Averaging Agreement Generator");
 
@@ -129,7 +129,7 @@ public class GUI extends JFrame implements ActionListener{
 
 
 
-        //System.out.println("DATE SELECTED:: " + dateStartPicker.getJFormattedTextField().getText());
+        ////System.out.println("DATE SELECTED:: " + dateStartPicker.getJFormattedTextField().getText());
 
 
 
@@ -187,11 +187,11 @@ public class GUI extends JFrame implements ActionListener{
             // if the user selects a file
             if (r == JFileChooser.APPROVE_OPTION){
                 String exportLocation = selected.getSelectedFile().getAbsolutePath().toString();
-                System.out.println(exportLocation);
+                //System.out.println(exportLocation);
 
                 try {
-                    System.out.println("DATE Start:: " + dateStartPicker.getJFormattedTextField().getText());
-                    System.out.println("DATE End:: " + dateEndPicker.getJFormattedTextField().getText());
+                    //System.out.println("DATE Start:: " + dateStartPicker.getJFormattedTextField().getText());
+                    //System.out.println("DATE End:: " + dateEndPicker.getJFormattedTextField().getText());
                     Editor.PDF.printAll(Parser.employees, exportLocation);
 
                 } catch (DocumentException e) {
@@ -229,7 +229,7 @@ public class GUI extends JFrame implements ActionListener{
                 // set the label to the path of the selected file
                 fileSelected.setText(selected.getSelectedFile().getAbsolutePath());
 
-                System.out.println("data Loaded!");
+                //System.out.println("data Loaded!");
                 String dataFile = selected.getSelectedFile().getAbsolutePath().toString();
 
                 try{

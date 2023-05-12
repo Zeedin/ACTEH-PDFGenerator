@@ -30,7 +30,7 @@ public class Parser {
     public static void csvParser(String rawfile){
 
 
-        System.out.println("csvParser");
+        //System.out.println("csvParser");
 
 
         String scheduledEmployees[] = rawfile.split("\\r?\\n");
@@ -38,7 +38,7 @@ public class Parser {
 
 
         for (int i=0; i < scheduledEmployees.length; i++){
-            //System.out.println("Array :: " +  scheduledEmployees[i]);
+            ////System.out.println("Array :: " +  scheduledEmployees[i]);
 
             String employeeRAW[] = scheduledEmployees[i].split(",");
 
@@ -75,12 +75,12 @@ public class Parser {
 
                         employees.put(eID, Person);
                     }
-                    System.out.println("Array :: " + "[" + eID + "]" + scheduledEmployees[i]);
+                    //System.out.println("Array :: " + "[" + eID + "]" + scheduledEmployees[i]);
 
                 }
             }
             catch (Exception e){
-                System.out.println("[ERROR]" + e);
+                //System.out.println("[ERROR]" + e);
             }
         }
         GUI.output.setText(null);

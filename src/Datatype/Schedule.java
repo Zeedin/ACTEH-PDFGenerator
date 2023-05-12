@@ -68,7 +68,11 @@ public class Schedule {
         month[relWeek][day][2] = dateEndTimeUNIX;
     }
 
-
+    private static int getWeekOfMonth() {
+        Calendar cal = Calendar.getInstance();
+        cal.setFirstDayOfWeek(Calendar.SATURDAY);
+        return cal.get(Calendar.WEEK_OF_MONTH);
+    }
 
 
     /**
