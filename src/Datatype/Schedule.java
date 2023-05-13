@@ -56,7 +56,7 @@ public class Schedule {
         }
 
         //index values
-        int day = dayOfTheWeek(dateStartTime);
+        int day = dayOfTheWeek(dateStartTime, globledateStart);
 
         //int baseWeek = weekOfTheMonth(globledateStart);
 
@@ -73,7 +73,7 @@ public class Schedule {
 
         //System.out.println("Week ID: "+relWeek );
 
-        if (relWeek != 69) {
+        if (relWeek != 69 && day != 69) {
             month[relWeek][day][0] = hoursWorked;
             month[relWeek][day][1] = dateStartTimeUNIX;
             month[relWeek][day][2] = dateEndTimeUNIX;
@@ -83,13 +83,13 @@ public class Schedule {
     private static int getWeekOfSchedule(Date date, Date globledateStart) {
         Calendar schedDay = Calendar.getInstance();
         schedDay.setTime(date);
-        schedDay.setFirstDayOfWeek(Calendar.SATURDAY);
+        //schedDay.setFirstDayOfWeek(Calendar.SATURDAY);
         int day = schedDay.get(Calendar.DAY_OF_YEAR);
 
 
         Calendar StartDay = Calendar.getInstance();
         StartDay.setTime(globledateStart);
-        StartDay.setFirstDayOfWeek(Calendar.SATURDAY);
+        //StartDay.setFirstDayOfWeek(Calendar.SATURDAY);
         int startDay =  StartDay.get(Calendar.DAY_OF_YEAR);
 
         int weekNumber = day - startDay;
@@ -99,6 +99,7 @@ public class Schedule {
         else if (weekNumber <= 13 ){weekid = 1;}
         else if (weekNumber <= 20 ){weekid = 2;}
         else if (weekNumber <= 27 ){weekid = 3;}
+        else if (weekNumber < 0  ){weekid = 69;} // junk value to throw out
         else {weekid = 69;} // junk value to throw out
 
         //System.out.println("YearStartNumb: "+startDay +" CompareDay: "+day+" Week ID: "+weekid + " Math: " + weekNumber);
@@ -113,16 +114,41 @@ public class Schedule {
      */
 
 
+//Yes I know I can cast error insted of 69 but trying to throw together quickly
+    public int dayOfTheWeek(Date date, Date globledateStart) {
+            Calendar schedDay = Calendar.getInstance();
+            schedDay.setTime(date);
+            //schedDay.setFirstDayOfWeek(Calendar.SATURDAY);
+            int day = schedDay.get(Calendar.DAY_OF_YEAR);
 
-    public int dayOfTheWeek(Date check){
 
-        Calendar c = Calendar.getInstance();
-        c.setTime(check);
-        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+            Calendar StartDay = Calendar.getInstance();
+            StartDay.setTime(globledateStart);
+            //StartDay.setFirstDayOfWeek(Calendar.SATURDAY);
+            int startDay =  StartDay.get(Calendar.DAY_OF_YEAR);
 
+            int dayNumber = day - startDay;
+            int dayid = 69;
 
-        return dayOfWeek;
-    }
+    if (dayNumber >=0 && dayNumber < 28){
+            while (dayNumber >6 ){
+                dayNumber = dayNumber - 7;
+            }
+
+            if (dayNumber == 0 ){dayid = 0;} // Sat
+            else if (dayNumber == 1 ){dayid = 1;} //Sun
+            else if (dayNumber == 2 ){dayid = 2;} //Mon
+            else if (dayNumber == 3 ){dayid = 3;} //Tues
+            else if (dayNumber == 4 ){dayid = 4;} //Wed
+            else if (dayNumber == 5 ){dayid = 5;} //Thurs
+            else if (dayNumber == 6 ){dayid = 6;} //Friday
+
+            else {dayid = 69;} // junk value to throw out
+        }
+    else {dayid = 69;}// junk value to throw out
+            System.out.println("WeekStart: "+startDay +" CompareDay: "+day+" Day ID: "+dayid + " Math: " + dayNumber);
+            return dayid;
+        }
 
     public int weekOfTheMonth(Date date){
 
